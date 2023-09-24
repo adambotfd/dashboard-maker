@@ -19,8 +19,9 @@ jobs:
         run: |
           echo '${{ steps.parse.outputs.payload }}'
           
-          echo '${{ fromJson(steps.parse.outputs.payload).Name }}'
-
+          # Set the parsed data as an environment variable
+          echo "::set-env name=PARSED_PAYLOAD::${{ steps.parse.outputs.payload }}"
+      
       - name: Create comment
         uses: peter-evans/create-or-update-comment@v3
         with:
@@ -28,5 +29,8 @@ jobs:
           repository: ${{ github.repository }}
           issue-number: ${{ github.event.issue.number }}
           body: |
-            ${{ steps.generate-html.outputs.html }}
+            Name: ${{ fromJson(env.PARSED_PAYLOAD).Name }}
+            ID: ${{ fromJson(env.PARSED_PAYLOAD).ID }}
+            Support: ${{ fromJson(env.PARSED_PAYLOAD).Support }}
+            Description: ${{ fromJson(env.PARSED_PAYLOAD).Description }}
           reactions: '+1'
