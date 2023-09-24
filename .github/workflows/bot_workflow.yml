@@ -1,0 +1,25 @@
+name: Create Bot Issue and PR
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  create_issue_and_pr:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Create Bot Issue and PR
+        run: node create_bot_issue_and_pr.js
