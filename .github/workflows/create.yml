@@ -1,12 +1,17 @@
-name: Invalidation Query
+name: "Create Bot Website"
+description: Create a website for your bot super easily with no coding experience
 on:
   issues:
     types: [opened]
 
 jobs:
-  close-issue:
+  generate-html:
     runs-on: ubuntu-latest
     steps:
+      - name: Generate HTML
+        id: generate-html
+        run: echo "::set-output name=html::<html><body><h1>Bot Website</h1><p>Bot ID: ${{ github.event.issue.properties.id }}</p><p>Bot Name: ${{ github.event.issue.properties.name }}</p><p>Bot Description: ${{ github.event.issue.properties.description }}</p><p>Support Server: <a href='${{ github.event.issue.properties.support }}'>Support Server</a></p></body></html>"
+
       - name: Create comment
         uses: peter-evans/create-or-update-comment@v3
         with:
@@ -14,9 +19,5 @@ jobs:
           repository: ${{ github.repository }}
           issue-number: ${{ github.event.issue.number }}
           body: |
-            This is a multi-line test comment
-            - With GitHub **Markdown** :sparkles:
-            - Created by [create-or-update-comment][1]
-
-            [1]: https://github.com/peter-evans/create-or-update-comment
+            ${{ steps.generate-html.outputs.html }}
           reactions: '+1'
