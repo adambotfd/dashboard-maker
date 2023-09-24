@@ -68,3 +68,9 @@ jobs:
             3. Finally, submit the pull request and our team will handle the rest!
 
           reactions: '+1'
+
+      - name: Close issue
+        uses: peter-evans/close-issue@v1
+        with:
+          token: ${{ secrets.PAT_TOKEN }}
+          issue-number: ${{ github.event.issue.number }}
