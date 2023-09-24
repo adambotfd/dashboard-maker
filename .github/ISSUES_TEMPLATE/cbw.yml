@@ -1,0 +1,39 @@
+name: "Create Bot Website"
+description: Create a website for your bot super easily with no coding expirience
+labels: ["websitecreation"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Create a stunning website for your bot super easily with no coding expirience
+  - type: textarea
+    id: id
+    attributes:
+      label: Bot ID
+      description: |
+        Whats your bots discord ID?
+    validations:
+      required: true
+  - type: textarea
+    id: name
+    attributes:
+      label: Bot Name
+      description: Whats your bots handle
+      placeholder: |
+        AdamBot#8743 or @AdamBot (depends if your bot has discord handles yet)
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Bot Description
+      description: Describe your bot (as many words as you want)        
+    validations:
+      required: true
+  - type: textarea
+    id: support
+    attributes:
+      label: Support Server
+      description: An invite link to your discord bots support server (DISCORD LINKS ONLY | NO LINK SHORTENERS)
+    validations:
+      required: true
