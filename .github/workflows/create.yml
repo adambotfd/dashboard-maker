@@ -61,6 +61,9 @@ jobs:
                 <section class="bot-demo">
                   <img src="${{ fromJson(steps.parse.outputs.payload).Demo }}" alt="Bot Demo" id="bot-image">
                 </section>
+                <section class="footer">
+                  <p>This website was generated for free by <a href="#" target="_blank">guardian bot list!</a> You can make one for your bot at <a href="https://github.com/adambotfd/dashboard-maker/" target="_blank">our github repo</a> or advertise your discord bot <a href="https://guardianbots.vercel.app" target="_blank">here.</a></p>
+              </section>
               </div>
             </body>
             </html>
