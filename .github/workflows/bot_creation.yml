@@ -1,0 +1,29 @@
+name: Bot Creation Workflow
+
+on:
+  push:
+    branches:
+      - main  # Adjust the branch name accordingly
+
+jobs:
+  create_bot:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Create Bot Issue and HTML
+        id: create_bot
+        uses: ./scripts/create_bot.sh
+        with:
+          botname: "MyBot"
+          botdescription: "Description of MyBot"
+          botinvite: "Invite link for MyBot"
+          botsupportserver: "Support server link for MyBot"
+
+      - name: Upload HTML file
+        uses: actions/upload-artifact@v2
+        with:
+          name: bot_html
+          path: ${{ steps.create_bot.outputs.html_file_path }}
