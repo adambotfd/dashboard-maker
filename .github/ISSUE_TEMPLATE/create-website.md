@@ -11,6 +11,14 @@ assignees: ''
 
 The name of your discord bot
 
+### Icon
+
+A URL to your bots icon
+
+### Demo
+
+A URL to an image of a command of your bot
+
 ### ID
 
 Your bots ID
