@@ -30,7 +30,7 @@ jobs:
           body: |
             Follow these instructions to Finnish up with your website!
 
-            1. Create a file in the main directory with the name `${{ fromJson(steps.parse.outputs.payload).Name }}.html`!
+            1. Create a file in the main directory of this repository with the name `${{ fromJson(steps.parse.outputs.payload).Name }}.html`!
             2. Put the following content into the file:
             ```
             <!DOCTYPE html>
