@@ -19,7 +19,7 @@ jobs:
         run: |
           echo '${{ steps.parse.outputs.payload }}'
     
-          echo '${{ fromJson(steps.parse.outputs.payload)["id"] }}'
+          echo '${{ fromJson(steps.parse.outputs.payload)["Name"] }}'
           
       - name: Create comment
         uses: peter-evans/create-or-update-comment@v3
