@@ -59,7 +59,7 @@ jobs:
                 </section>
                 <br>
                 <section class="bot-demo">
-                  <img src="${{ fromJson(steps.parse.outputs.payload).Deno }}" alt="Bot Demo" id="bot-image">
+                  <img src="${{ fromJson(steps.parse.outputs.payload).Demo }}" alt="Bot Demo" id="bot-image">
                 </section>
               </div>
             </body>
