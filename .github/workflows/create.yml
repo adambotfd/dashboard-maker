@@ -1,5 +1,5 @@
 name: "Create Bot Website"
-description: Create a website for your bot super easily with no coding experience
+
 on:
   issues:
     types: [opened]
