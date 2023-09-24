@@ -10,7 +10,8 @@ jobs:
     steps:
       - name: Generate HTML
         id: generate-html
-        run: echo "::set-output name=html::<html><body><h1>Bot Website</h1><p>Bot ID: ${{ github.event.issue.properties.id }}</p><p>Bot Name: ${{ github.event.issue.properties.name }}</p><p>Bot Description: ${{ github.event.issue.properties.description }}</p><p>Support Server: <a href='${{ github.event.issue.properties.support }}'>Support Server</a></p></body></html>"
+        run: |
+          echo "::set-output name=html::<html><body><h1>Bot Website</h1><p>Bot ID: ${{ github.event.issue.body.id }}</p><p>Bot Name: ${{ github.event.issue.body.name }}</p><p>Bot Description: ${{ github.event.issue.body.description }}</p><p>Support Server: <a href='${{ github.event.issue.body.support }}'>Support Server</a></p></body></html>"
 
       - name: Create comment
         uses: peter-evans/create-or-update-comment@v3
