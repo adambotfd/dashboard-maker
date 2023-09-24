@@ -8,11 +8,19 @@ jobs:
   generate-html:
     runs-on: ubuntu-latest
     steps:
-      - name: Generate HTML
-        id: generate-html
+      - name: Parse issue
+        id: parse
+        uses: onmax/issue-form-parser@v1.4
+        with:
+          issue_number: ${{ github.event.issue.number }}
+    
+      # Examples on how to use the output
+      - name: Show parsed payload data
         run: |
-          echo "::set-output name=html::<html><body><h1>Bot Website</h1><p>Bot ID: ${{ github.event.issue.body.id }}</p><p>Bot Name: ${{ github.event.issue.body.name }}</p><p>Bot Description: ${{ github.event.issue.body.description }}</p><p>Support Server: <a href='${{ github.event.issue.body.support }}'>Support Server</a></p></body></html>"
-
+          echo '${{ steps.parse.outputs.payload }}'
+    
+          echo '${{ fromJson(steps.parse.outputs.payload)["id"] }}'
+          
       - name: Create comment
         uses: peter-evans/create-or-update-comment@v3
         with:
