@@ -1,6 +1,6 @@
 ---
-name: Create Website
-about: Create a dynamic website
+name: Create Dynamic Website
+about: Create a website for your bot in 1 minute with no coding knowledge and only simple Github expirience and we will handle the hosting and domains.
 title: "[Dynamic Website Creation] Your Bots Name"
 labels: dynamic website
 assignees: ''
