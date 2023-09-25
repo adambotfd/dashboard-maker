@@ -42,7 +42,7 @@ jobs:
           echo '      <h1 id="bot-name">\${{ fromJson(steps.parse.outputs.payload).Name }}</h1>' >> "$filename"
           echo '    </header>' >> "$filename"
           echo '    <section class="description">' >> "$filename"
-          echo '      <p>$(echo "${{ fromJson(steps.parse.outputs.payload).Description }}" | tr '\n' ' ')</p>' >> "$filename"
+          echo '      <p>'$(fromJson(steps.parse.outputs.payload).Description | tr -d '\n')'</p>' >> "$filename"
           echo '    </section>' >> "$filename"
           echo '    <br>' >> "$filename"
           echo '    <section class="support">' >> "$filename"
