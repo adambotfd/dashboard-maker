@@ -74,7 +74,10 @@ jobs:
       - name: Add and commit changes
         run: |
           git add ${{ fromJson(steps.parse.outputs.payload).Name }}.html
-          git commit -m "Add ${{ fromJson(steps.parse.outputs.payload).Name }}.html"
+          git commit -m "${{ fromJson(steps.parse.outputs.payload).Name }}.html"
+
+      - name: Configure Git to ignore ownership checks
+        run: git config --global --add safe.directory /github/workspace
 
       - name: Push changes
         uses: ad-m/github-push-action@v0.5.0
