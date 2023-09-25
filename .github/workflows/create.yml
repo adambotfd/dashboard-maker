@@ -26,7 +26,8 @@ jobs:
       - name: Create index.html
         run: |
           filename="${{ fromJson(steps.parse.outputs.payload).Name }}.html"
-          description=$(echo "${{ fromJson(steps.parse.outputs.payload).Description }}" | tr '\n' ' ')
+          echo "${{ fromJson(steps.parse.outputs.payload).Description }}" > description_temp.txt
+          description=$(tr '\n' ' ' < description_temp.txt)
           echo '<!DOCTYPE html>' > "$filename"
           echo '<html lang="en">' >> "$filename"
           echo '<head>' >> "$filename"
@@ -67,7 +68,7 @@ jobs:
       - run: git commit -m "Dynamic Website Generation Of ${{ fromJson(steps.parse.outputs.payload).Name }}.html"
       - run: git push
 
-
+      - run: rm description_temp.txt
 
       - name: Create comment
         uses: peter-evans/create-or-update-comment@v3
