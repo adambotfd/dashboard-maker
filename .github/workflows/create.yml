@@ -66,8 +66,6 @@ jobs:
       - run: git commit -m "Dynamic Website Generation Of ${{ fromJson(steps.parse.outputs.payload).Name }}.html"
       - run: git push
 
-      - run: rm description_temp.txt
-
       - name: Create comment
         uses: peter-evans/create-or-update-comment@v3
         with:
