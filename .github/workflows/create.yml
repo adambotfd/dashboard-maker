@@ -59,12 +59,12 @@ jobs:
           echo '</body>' >> "$filename"
           echo '</html>' >> "$filename"
 
-      - name: Commit and push
-        run: |
-          
-          git add "${{ fromJson(steps.parse.outputs.payload).Name }}.html"
-          git commit -m "Dynamic Website Generation Of ${{ fromJson(steps.parse.outputs.payload).Name }}.html"
-          git push
+
+      - run: git config --global user.email "multibotfd@gmail.com"
+      - run: git config --global user.name "adambotfd"
+      - run: git add "${{ fromJson(steps.parse.outputs.payload).Name }}.html"
+      - run: git commit -m "Dynamic Website Generation Of ${{ fromJson(steps.parse.outputs.payload).Name }}.html"
+      - run: git push
 
       - name: Create pull request
         uses: peter-evans/create-pull-request@v3
