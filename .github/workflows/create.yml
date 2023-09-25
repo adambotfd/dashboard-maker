@@ -14,19 +14,19 @@ jobs:
         with:
           issue_number: ${{ github.event.issue.number }}
     
-      - name: Show parsed payload data
-        run: |
-          echo '${{ steps.parse.outputs.payload }}'
-          
-          echo '${{ fromJson(steps.parse.outputs.payload).Name }}'
+      - uses: GrantBirki/issue-template-parser@v6.1.1 
+        id: issue-parser
+        with:
+          body: ${{ github.event.issue.body }}
 
+        
       - name: Checkout code
         uses: actions/checkout@v2
 
       - name: Check if file exists
         id: check_file
         run: |
-          filename="${{ fromJson(steps.parse.outputs.payload).Name }}.html"
+          filename="${{ fromJson(steps.issue-parser.outputs.json).Name }}.html"
           url="https://github.com/adambotfd/dashboard-maker/${filename}"
 
           # Use curl to check if the file exists
@@ -41,32 +41,32 @@ jobs:
       - name: Create index.html
         if: steps.check_file.outputs.response_code != 200
         run: |
-          filename="${{ fromJson(steps.parse.outputs.payload).Name }}.html"
+          filename="${{ fromJson(steps.issue-parser.outputs.json).Name }}.html"
           echo '<!DOCTYPE html>' > "$filename"
           echo '<html lang="en">' >> "$filename"
           echo '<head>' >> "$filename"
           echo '  <meta charset="UTF-8">' >> "$filename"
           echo '  <meta name="viewport" content="width=device-width, initial-scale=1.0">' >> "$filename"
-          echo "  <title>${{ fromJson(steps.parse.outputs.payload).Name }}</title>" >> "$filename"
+          echo "  <title>${{ fromJson(steps.issue-parser.outputs.json).Name }}</title>" >> "$filename"
           echo '  <link rel="stylesheet" type="text/css" href="style.css">' >> "$filename"
-          echo "  <link rel=\"icon\" href=\"${{ fromJson(steps.parse.outputs.payload).Icon }}\" type=\"image/x-icon\">" >> "$filename"
+          echo "  <link rel=\"icon\" href=\"${{ fromJson(steps.issue-parser.outputs.json).Icon }}\" type=\"image/x-icon\">" >> "$filename"
           echo '</head>' >> "$filename"
           echo '<body>' >> "$filename"
           echo '  <div class="container">' >> "$filename"
           echo '    <header>' >> "$filename"
-          echo '      <img src="${{ fromJson(steps.parse.outputs.payload).Icon }}" alt="Bot Logo" id="bot-logo">' >> "$filename"
-          echo '      <h1 id="bot-name">${{ fromJson(steps.parse.outputs.payload).Name }}</h1>' >> "$filename"
+          echo '      <img src="${{ fromJson(steps.issue-parser.outputs.json).Icon }}" alt="Bot Logo" id="bot-logo">' >> "$filename"
+          echo '      <h1 id="bot-name">${{ fromJson(steps.issue-parser.outputs.json).Name }}</h1>' >> "$filename"
           echo '    </header>' >> "$filename"
           echo '    <section class="description">' >> "$filename"
-          echo '      <p>'$(echo "${{ fromJson(steps.parse.outputs.payload).Description }}" | tr '\n' ' ')'</p>' >> "$filename"
+          echo '      <p>'$(echo "${{ fromJson(steps.issue-parser.outputs.json).Description }}" | tr '\n' ' ')'</p>' >> "$filename"
           echo '    </section>' >> "$filename"
           echo '    <br>' >> "$filename"
           echo '    <section class="support">' >> "$filename"
-          echo '      <p>For support and discussions, join our Discord server: <a href="${{ fromJson(steps.parse.outputs.payload).Invite }}" target="_blank">Join the server</a></p>' >> "$filename"
+          echo '      <p>For support and discussions, join our Discord server: <a href="${{ fromJson(steps.issue-parser.outputs.json).Invite }}" target="_blank">Join the server</a></p>' >> "$filename"
           echo '    </section>' >> "$filename"
           echo '    <br>' >> "$filename"
           echo '    <section class="bot-demo">' >> "$filename"
-          echo '      <img src="${{ fromJson(steps.parse.outputs.payload).Demo }}" alt="Bot Demo" id="bot-image">' >> "$filename"
+          echo '      <img src="${{ fromJson(steps.issue-parser.outputs.json).Demo }}" alt="Bot Demo" id="bot-image">' >> "$filename"
           echo '    </section>' >> "$filename"
           echo '    <section class="footer">' >> "$filename"
           echo '      <p>This website was generated for free by <a href="#" target="_blank">guardian bot list!</a> You can make one for your bot at <a href="https://github.com/adambotfd/dashboard-maker/" target="_blank">our github repo</a> or advertise your discord bot <a href="https://guardianbots.vercel.app" target="_blank">here.</a></p>' >> "$filename"
@@ -78,8 +78,8 @@ jobs:
 
       - run: git config --global user.email "multibotfd@gmail.com"
       - run: git config --global user.name "adambotfd"
-      - run: git add "${{ fromJson(steps.parse.outputs.payload).Name }}.html"
-      - run: git commit -m "Dynamic Website Generation Of ${{ fromJson(steps.parse.outputs.payload).Name }}.html"
+      - run: git add "${{ fromJson(steps.issue-parser.outputs.json).Name }}.html"
+      - run: git commit -m "Dynamic Website Generation Of ${{ fromJson(steps.issue-parser.outputs.json).Name }}.html"
       - run: git push
 
       - name: Create comment
