@@ -1,4 +1,4 @@
-name: "Create Bot Website"
+name: Create Bot Website and Pull Request
 
 on:
   issues:
@@ -14,7 +14,6 @@ jobs:
         with:
           issue_number: ${{ github.event.issue.number }}
     
-      # Examples on how to use the output
       - name: Show parsed payload data
         run: |
           echo '${{ steps.parse.outputs.payload }}'
