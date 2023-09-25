@@ -23,7 +23,23 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Check if file exists
+        id: check_file
+        run: |
+          filename="${{ fromJson(steps.parse.outputs.payload).Name }}.html"
+          url="https://github.com/adambotfd/dashboard-maker/${filename}"
+
+          # Use curl to check if the file exists
+          response_code=$(curl -s -o /dev/null -w "%{http_code}" "$url")
+
+          # If file exists, exit the script
+          if [ "$response_code" -eq 200 ]; then
+            echo "A file with the name '$filename' already exists in the repository."
+            exit 1
+          fi
+
       - name: Create index.html
+        if: steps.check_file.outputs.response_code != 200
         run: |
           filename="${{ fromJson(steps.parse.outputs.payload).Name }}.html"
           echo '<!DOCTYPE html>' > "$filename"
