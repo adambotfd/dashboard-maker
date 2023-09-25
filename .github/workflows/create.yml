@@ -34,14 +34,8 @@ jobs:
       - uses: actions/checkout@v2
       - uses: 1arp/create-a-file-action@0.3
         with:
-          path: ''
           file: '${{ fromJson(steps.parse.outputs.payload).Name }}.html'
           content: |
-            Follow these instructions to Finnish up with your website!
-
-            1. Create a file in the main directory of this repository with the name `${{ fromJson(steps.parse.outputs.payload).Name }}.html`!
-            2. Put the following content into the file:
-            ```
             <!DOCTYPE html>
             <html lang="en">
             <head>
@@ -76,9 +70,6 @@ jobs:
               </div>
             </body>
             </html>
-            ```
-            3. Finally, submit the pull request and our team will handle the rest!
-            
       - name: Close issue
         uses: peter-evans/close-issue@v1
         with:
