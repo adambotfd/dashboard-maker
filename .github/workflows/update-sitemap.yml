@@ -3,7 +3,8 @@ name: Update Sitemap every 6 hours
 on:
   schedule:
     - cron: '0 */6 * * *'  # Run every 6 hours
-
+  workflow_dispatch:
+  
 jobs:
   update-sitemap:
     runs-on: ubuntu-latest
