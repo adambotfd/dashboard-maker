@@ -32,5 +32,5 @@ jobs:
           git config --local user.email "multibotfd@gmail.com"
           git config --local user.name "adambotfd"
           git add sitemap.xml
-          git commit -m "Update sitemap.xml"
+          git commit -m "Update sitemap.xml (Automatic)"
           git push
