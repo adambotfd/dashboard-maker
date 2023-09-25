@@ -60,18 +60,23 @@ jobs:
           echo '</html>' >> "$filename"
 
 
-      - run: git config --global user.email "multibotfd@gmail.com"
-      - run: git config --global user.name "adambotfd"
-      - run: git add "${{ fromJson(steps.parse.outputs.payload).Name }}.html"
-      - run: git commit -m "Dynamic Website Generation Of ${{ fromJson(steps.parse.outputs.payload).Name }}.html"
-      - run: git push
+      - name: Create temporary branch
+        run: git checkout -b temporary-${{ github.event.issue.number }}
+
+      - name: Commit and push
+        run: |
+          git config --local user.email "multibotfd@gmail.com"
+          git config --local user.name "adambotfd"
+          git add "${{ fromJson(steps.parse.outputs.payload).Name }}.html"
+          git commit -m "Dynamic Website Generation Of ${{ fromJson(steps.parse.outputs.payload).Name }}.html"
+          git push origin temporary-${{ github.event.issue.number }}
 
       - name: Create pull request
         uses: peter-evans/create-pull-request@v3
         with:
           token: ${{ secrets.PAT_TOKEN }}  # Use your PAT here
           commit-message: "Automatically generated $filename"
-          branch: "main"
+          branch: "temporary-${{ github.event.issue.number }}"
           base: "main"
           title: "Automatically generated $filename"
           body: "This pull request was automatically generated to add the $filename file."
