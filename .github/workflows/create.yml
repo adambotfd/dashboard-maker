@@ -26,8 +26,7 @@ jobs:
       - name: Create index.html
         run: |
           filename="${{ fromJson(steps.parse.outputs.payload).Name }}.html"
-          echo "${{ fromJson(steps.parse.outputs.payload).Description }}" > description_temp.txt
-          description=$(tr '\n' ' ' < description_temp.txt)
+          description=$(echo "${{ fromJson(steps.parse.outputs.payload).Description }}" | tr '\n' ' ')
           echo '<!DOCTYPE html>' > "$filename"
           echo '<html lang="en">' >> "$filename"
           echo '<head>' >> "$filename"
