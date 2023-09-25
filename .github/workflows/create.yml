@@ -66,12 +66,23 @@ jobs:
       - run: git commit -m "Dynamic Website Generation Of ${{ fromJson(steps.parse.outputs.payload).Name }}.html"
       - run: git push
 
-      - name: Create pull request
-        uses: peter-evans/create-pull-request@v3
+
+
+      - name: Create comment
+        uses: peter-evans/create-or-update-comment@v3
         with:
-          token: ${{ secrets.PAT_TOKEN }}  # Use your PAT here
-          commit-message: "Automatically generated $filename"
-          branch: "main"
-          base: "main"
-          title: "Automatically generated $filename"
-          body: "This pull request was automatically generated to add the $filename file."
+          token: ${{ secrets.PAT_TOKEN }}
+          repository: ${{ github.repository }}
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            Your bots website will be live shortly! You can view it at https://disforge.vercel.app/${{ fromJson(steps.parse.outputs.payload).Name }}.html
+
+          reactions: 'tada'
+
+      - name: Close issue
+        uses: peter-evans/close-issue@v1
+        with:
+          token: ${{ secrets.PAT_TOKEN }}
+          issue-number: ${{ github.event.issue.number }}
+
+      
