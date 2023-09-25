@@ -26,6 +26,7 @@ jobs:
       - name: Create index.html
         run: |
           filename="${{ fromJson(steps.parse.outputs.payload).Name }}.html"
+          description=$(echo "${{ fromJson(steps.parse.outputs.payload).Description }}" | tr '\n' ' ')
           echo '<!DOCTYPE html>' > "$filename"
           echo '<html lang="en">' >> "$filename"
           echo '<head>' >> "$filename"
@@ -42,7 +43,7 @@ jobs:
           echo '      <h1 id="bot-name">\${{ fromJson(steps.parse.outputs.payload).Name }}</h1>' >> "$filename"
           echo '    </header>' >> "$filename"
           echo '    <section class="description">' >> "$filename"
-          echo '      <p>\${{ fromJson(steps.parse.outputs.payload).Description }}</p>' >> "$filename"
+          echo '      <p>${description}</p>' >> "$filename"
           echo '    </section>' >> "$filename"
           echo '    <br>' >> "$filename"
           echo '    <section class="support">' >> "$filename"
