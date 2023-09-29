@@ -15,13 +15,12 @@ jobs:
 
       - name: Generate Sitemap
         run: |
-          echo '<?xml version="1.0" encoding="UTF-8"?>
-          <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' > sitemap.xml
-
-          # Add URLs from the root directory
-          find . -type f -name "*.html" | sed 's|^./||' | while read -r line; do
+          input_string=$(curl -s https://guardianapi.vercel.app/botlist/10000000000)
+          bot_ids=$(echo "$input_string" | grep -oP '"bot_ids":\s*\[\K[^\]]+')
+          for bot_id in $bot_ids; do
+            echo "Processing bot ID: $bot_id"
             echo "  <url>"
-            echo "    <loc>https://disforge.vercel.app/$line</loc>"
+            echo "    <loc>https://guardianbots.vercel.app/$bot_id</loc>"
             echo "  </url>"
           done >> sitemap.xml
 
